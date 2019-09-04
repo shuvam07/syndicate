@@ -19,16 +19,21 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '#btnBulkSubmit', function(e){
-        numbers = $("#bulk_sms_numbers").val().split(';')
+        numbers = '91'+$("#bulk_sms_numbers").val().split(';')
         message = $("#bulk_message").val()
         console.log(numbers)
         console.log(message)
-        var url = '/getInfo/'
+        var url = '/gateway/publish/send/mType/1/contactNum/'+number
         $.ajax({
             type : "POST", 
             url : url, 
             data:{
-                'value[]': {},
+                'value[]': {
+                    'messageId': 1,
+                    'messageType':1,
+                    'message': message,
+                    'contactNumber': number,
+                    },
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
             },
             success : function(data) {
