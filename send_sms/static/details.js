@@ -2,21 +2,18 @@ $(document).ready(function() {
 
 
     $(document).on('click', '#btnSubmit', function(e){
-        number = $("#sms_number").val().split(';')
-        message = $("#message").val()
+        number = encodeURIComponent('+91'+$("#sms_number").val().split(';'))
+        message = encodeURIComponent($("#message").val())
+        mType=encodeURIComponent(1)
         console.log(number)
         console.log(message)
-        var url = '/getInfo/'
+        var url = 'http://localhost:8081/gateway/publish/send/mType/'+mType+'/contactNum/'+number+'/message/'+message
         $.ajax({
-            type : "POST", 
             url : url, 
-            data:{
-                'value[]': {},
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-            },
+            type : 'GET', 
             success : function(data) {
-                    
-              },
+                console.log("Message sent...")
+            },
         });
 
     });
